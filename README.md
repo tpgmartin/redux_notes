@@ -5,7 +5,11 @@
 ### Methods
 
 * `dispatch`
+  - The only way to trigger a state change
+  - The store’s reducing function will be called with the current getState() result and the given action synchronously
+  - Subscriptions are called after the root reducer has returned the new state, so can call dispatch in subscription listeners
 * `subscribe`
+  - Add a new change listener
 * `getState`
 * `replaceReducer`
 * `[$$observable]`
@@ -17,9 +21,21 @@
 
 ### Notes
 
+* Only one store per app
 * The only way to change the data in the store is to call `dispatch()` on it
 * The `reducer` creates the next state tree 
+* Make sure to return `Object.assign({}, state, newData)` to prevent mutation
 * If you use `combineReducers` to produce the root reducer function, the `preloadedState` of `createStore` must be an object with the same shape as `combineReducers` keys
+
+## combineReducers
+
+### Private Methods
+
+* getUndefinedStateErrorMessage
+  - 
+* getUnexpectedStateShapeWarningMessage
+* assertReducerSanity
+
 
 ## applyMiddleware
 
@@ -56,6 +72,14 @@
 ### dispatch(er)
 
 ### reducer
+
+### state
+
+The single state value that is managed by the store and returned by getState(). It represents the entire state of a Redux application, which is often a deeply nested object. The state should be any type that can is serialisable.
+
+### store 
+
+A store is not a class. It’s just an object with a few methods on it. To create it, pass your root reducing function to createStore.
 
 ### store enhancer
 
